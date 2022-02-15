@@ -2,53 +2,87 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 
 Rectangle{
-    width: 50*8 + 4
-    height: 50*8 + 4
 
-    border.color: "black"
-    border.width: 2
+
+//    border.color: "black"
+//    border.width: 2
 
     BoardColumn {
         id: grid1
+        x: 50
+        Rectangle { color: "chocolate"; width: 50; height: 50}
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
 
-        Component.onCompleted: {console.log(y)}
+
     }
     BoardColumn {
         id: grid2
-        x: 52
-        y: 52
+        y: 50
+        Rectangle { color: "chocolate"; width: 50; height: 50}
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
 
-        Component.onCompleted: {console.log(y)}
 
     }
     BoardColumn {
         id: grid3
-        y: 50 * 2 + 2
+        y: 50 * 2
+        x: 50
+        Rectangle { color: "chocolate"; width: 50; height: 50}
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+
     }
     BoardColumn {
         id: grid4
-        x: 52
-        y: 50 * 3 + 2
+        y: 50 * 3
+        Rectangle { color: "chocolate"; width: 50; height: 50}
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+
     }
     BoardColumn {
         id: grid5
-        y: 50 * 4 + 2
+        y: 50 * 4
+        x: 50
+        Rectangle { color: "chocolate"; width: 50; height: 50}
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+
     }
     BoardColumn {
         id: grid6
-        x: 52
-        y: 50 * 5 + 2
+        y: 50 * 5
+        Rectangle { color: "chocolate"; width: 50; height: 50}
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+
     }
     BoardColumn {
         id: grid7
-        y: 50 * 6  + 2
+        y: 50 * 6
+        x: 50
+        Rectangle { color: "chocolate"; width: 50; height: 50}
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+
     }
     BoardColumn {
         id: grid8
-        x: 52
-        y: 50 * 7 + 2
+        y: 50 * 7
+        Rectangle { color: "chocolate"; width: 50; height: 50}
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+        Rectangle { color: "chocolate"; width: 50; height: 50 }
+
     }
 
 }
-
-
