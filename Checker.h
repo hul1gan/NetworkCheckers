@@ -4,9 +4,14 @@
 class Checker
 {
 public:
-    bool _color;    //0 - white, 1 - black
+    bool color = false;    //0 - white, 1 - black
 
-    bool _isKing;  //0 - false, 1 - true
+    bool isKing = false;  //0 - false, 1 - true
+
+    bool isEmptyCell = true;
+
+
+    int position;
 };
 
 #endif // CHECKER_H

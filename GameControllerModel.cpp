@@ -2,6 +2,9 @@
 
 GameControllerModel::GameControllerModel(QObject *parent) : QAbstractListModel(parent){
 
+    m_data.reserve(64);
+
+    setTheStartBoard();
 
 
 }
@@ -9,7 +12,15 @@ GameControllerModel::GameControllerModel(QObject *parent) : QAbstractListModel(p
 void GameControllerModel::setTheStartBoard()
 {
 
+    for(int i = 0; i < 64; i++){
+
+    //qDebug() << "m_data.push_back(Checker{});" << i;
+
+        m_data.push_back(Checker{});
+
+    }
 }
+
 
 
 int GameControllerModel::rowCount(const QModelIndex &parent) const
@@ -19,7 +30,7 @@ int GameControllerModel::rowCount(const QModelIndex &parent) const
         return 0;
     }
 
-    return m_data.size();
+    return 8;
 }
 
 QVariant GameControllerModel::data(const QModelIndex &index, int role) const
@@ -31,34 +42,23 @@ QVariant GameControllerModel::data(const QModelIndex &index, int role) const
 
     switch (role)
     {
-    case Roles::TypeNameRole:
+    case Roles::Position:
     {
-        return QVariant::fromValue(m_data.at(index.row()).typeName);
+        return QVariant::fromValue(m_data.at(index.row()).position);
     }
-    case Roles::MakerNameRole:
+    case Roles::IsEmptyCell:
     {
-        return QVariant::fromValue(m_data.at(index.row()).makerName);
+        return QVariant::fromValue(m_data.at(index.row()).isEmptyCell);
     }
-    case Roles::MaterialNameRole:
+    case Roles::Color:
     {
-        return QVariant::fromValue(m_data.at(index.row()).materialName);
+        return QVariant::fromValue(m_data.at(index.row()).color);
     }
-    case Roles::ScoreRole:
+    case Roles::IsKing:
     {
-        return QVariant::fromValue(m_data.at(index.row()).score);
+        return QVariant::fromValue(m_data.at(index.row()).isKing);
     }
-    case Roles::CostRole:
-    {
-        return QVariant::fromValue(m_data.at(index.row()).cost);
-    }
-    case Roles::PathRole:
-    {
-        return QVariant::fromValue(m_data.at(index.row()).path);
-    }
-    case Roles::NumInStorageRole:
-    {
-      return QVariant::fromValue(m_data.at(index.row()).numberInStotage);
-    }
+
     default:
     {
         return QVariant();
@@ -75,39 +75,24 @@ bool GameControllerModel::setData(const QModelIndex &index, const QVariant &valu
     }
 
     switch (role) {
-    case Roles::TypeNameRole:
+    case Roles::Position:
     {
-        m_data[index.row()].typeName = value.toString();
+        m_data[index.row()].position = value.toInt();
         break;
     }
-    case Roles::MakerNameRole:
+    case Roles::IsEmptyCell:
     {
-        m_data[index.row()].makerName = value.toString();
+        m_data[index.row()].isEmptyCell = value.toBool();
         break;
     }
-    case Roles::MaterialNameRole:
+    case Roles::Color:
     {
-        m_data[index.row()].materialName = value.toString();
+        m_data[index.row()].color = value.toBool();
         break;
     }
-    case Roles::ScoreRole:
+    case Roles::IsKing:
     {
-        m_data[index.row()].score = value.toInt();
-        break;
-    }
-    case Roles::CostRole:
-    {
-        m_data[index.row()].cost = value.toDouble();
-        break;
-    }
-    case Roles::PathRole:
-    {
-        m_data[index.row()].path = value.toString();
-        break;
-    }
-    case Roles::NumInStorageRole:
-    {
-        m_data[index.row()].numberInStotage = value.toInt();
+        m_data[index.row()].isKing = value.toBool();
         break;
     }
 
@@ -130,14 +115,16 @@ QHash<int, QByteArray> GameControllerModel::roleNames() const
 {
 
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
-    roles[TypeNameRole] = "typeText";
-    roles[MakerNameRole] = "creator";
-    roles[MaterialNameRole] = "materialText";
-    roles[ScoreRole] = "score";
-    roles[CostRole] = "costText";
+    roles[Position] = "position";
+    roles[IsEmptyCell] = "isEmptyCell";
+    roles[Color] = "color";
+    roles[IsKing] = "isKing";
 
-    roles[PathRole] = "sourceImg";
-    roles[NumInStorageRole] = "numOfStorage";
 
     return roles;
+}
+
+int GameControllerModel::columnCount(const QModelIndex &) const
+{
+    return 8;
 }

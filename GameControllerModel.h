@@ -15,7 +15,7 @@ public:
     enum Roles
     {
         Position = Qt::UserRole + 1,
-        IsCheckerHere,
+        IsEmptyCell,
         Color,
         IsKing,
 
@@ -36,6 +36,8 @@ public:
 
     // QAbstractItemModel interface
     virtual QHash<int, QByteArray> roleNames() const override;
+
+    int columnCount(const QModelIndex & = QModelIndex()) const override;
 };
 
 
