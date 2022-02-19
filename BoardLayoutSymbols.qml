@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 
+import GameModel 1.0
+
 Row{
 
     Rectangle { color: "white";

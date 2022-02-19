@@ -4,9 +4,9 @@
 #include<Checker.h>
 
 #include <QObject>
-#include <QAbstractListModel>
+#include <QAbstractTableModel>
 
-class GameControllerModel: public QAbstractListModel
+class GameControllerModel: public QAbstractTableModel
 {
         Q_OBJECT
 public:
@@ -16,6 +16,7 @@ public:
     {
         Position = Qt::UserRole + 1,
         IsEmptyCell,
+        IsActiveCell,
         Color,
         IsKing,
 
@@ -32,12 +33,12 @@ public:
     virtual QVariant data(const QModelIndex &index, int role) const override;
 
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;
-    virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
+    //virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
 
     // QAbstractItemModel interface
     virtual QHash<int, QByteArray> roleNames() const override;
 
-    int columnCount(const QModelIndex & = QModelIndex()) const override;
+    virtual int columnCount(const QModelIndex& parent) const override;
 };
 
 

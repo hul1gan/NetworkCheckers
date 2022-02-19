@@ -11,48 +11,60 @@ Window {
 
     GameModel{
    id:gameModel
+
     }
 
     TableView{
 
-        model:gameModel
-        anchors.fill: parent
+        id: tableModel
 
-        height: 50
-        width: 50
+        model:gameModel
+        anchors.centerIn: parent
+
+
+        height: 50*8
+        width: 50*8
 
         delegate: Rectangle
         {
-
             implicitHeight: 50
             implicitWidth: 50
 
             border.color: "black"
-            border.width: 2
-    }
-    }
+            border.width: 1;
 
+            color: model.isActiveCell ? "gray"
+                                  : "white"
 
-       // anchors.centerIn : parent
-
-//        BoardLayoutNubmers {
-//            anchors.right: board.left
-//        }
-
-//        BoardLayoutNubmers {
-//            anchors.left: board.right
-//        }
-
-//        BoardLayoutSymbols {
-//            anchors.bottom: board.top
-//        }
-
-
-//        BoardLayoutSymbols {
-//            anchors.top: board.bottom
-//        }
 
     }
+
+
+    }
+
+    BoardLayoutNubmers {
+        parent: tableModel
+        anchors.right: tableModel.left
+    }
+
+    BoardLayoutNubmers {
+        parent: tableModel
+        anchors.left: tableModel.right
+    }
+
+    BoardLayoutSymbols {
+        parent: tableModel
+        anchors.bottom: tableModel.top
+    }
+
+
+    BoardLayoutSymbols {
+        parent: tableModel
+        anchors.top: tableModel.bottom
+    }
+
+
+}
 
 
 

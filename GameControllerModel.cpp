@@ -1,10 +1,12 @@
 #include <GameControllerModel.h>
 
-GameControllerModel::GameControllerModel(QObject *parent) : QAbstractListModel(parent){
+GameControllerModel::GameControllerModel(QObject *parent) : QAbstractTableModel(parent){
 
     m_data.reserve(64);
 
     setTheStartBoard();
+
+    qDebug() << m_data.size();
 
 
 }
@@ -12,16 +14,25 @@ GameControllerModel::GameControllerModel(QObject *parent) : QAbstractListModel(p
 void GameControllerModel::setTheStartBoard()
 {
 
-    for(int i = 0; i < 64; i++){
+    bool col = false;
 
-    //qDebug() << "m_data.push_back(Checker{});" << i;
+    for(int i = 0; i < 64; i++){
 
         m_data.push_back(Checker{});
 
+        if(col == true)
+        {
+            m_data[i].isActiveCell = true;
+            //qDebug() << i << col;
+
+        }
+        if(((i+1)%8) == 0){
+
+        }else{
+            //qDebug() << "else";
+            col = !col;}
     }
 }
-
-
 
 int GameControllerModel::rowCount(const QModelIndex &parent) const
 {
@@ -29,7 +40,7 @@ int GameControllerModel::rowCount(const QModelIndex &parent) const
 
         return 0;
     }
-
+    Q_UNUSED(parent);
     return 8;
 }
 
@@ -40,23 +51,32 @@ QVariant GameControllerModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
+    int row = index.row();
+    int column = index.column();
+
+    int elIndex = (8 * row ) + column ;
+
     switch (role)
     {
     case Roles::Position:
     {
-        return QVariant::fromValue(m_data.at(index.row()).position);
+        return QVariant::fromValue(m_data[elIndex].position);
     }
     case Roles::IsEmptyCell:
     {
-        return QVariant::fromValue(m_data.at(index.row()).isEmptyCell);
+        return QVariant::fromValue(m_data[elIndex].isEmptyCell);
     }
     case Roles::Color:
     {
-        return QVariant::fromValue(m_data.at(index.row()).color);
+        return QVariant::fromValue(m_data[elIndex].color);
     }
     case Roles::IsKing:
     {
-        return QVariant::fromValue(m_data.at(index.row()).isKing);
+        return QVariant::fromValue(m_data[elIndex].isKing);
+    }
+    case Roles::IsActiveCell:
+    {
+        return QVariant::fromValue(m_data[elIndex].isActiveCell);
     }
 
     default:
@@ -95,6 +115,11 @@ bool GameControllerModel::setData(const QModelIndex &index, const QVariant &valu
         m_data[index.row()].isKing = value.toBool();
         break;
     }
+    case Roles::IsActiveCell:
+    {
+        m_data[index.row()].isActiveCell = value.toBool();
+        break;
+    }
 
     }
 
@@ -103,28 +128,30 @@ bool GameControllerModel::setData(const QModelIndex &index, const QVariant &valu
     return true;
 }
 
-Qt::ItemFlags GameControllerModel::flags(const QModelIndex &index) const
-{
-    if (!index.isValid())
-        return Qt::ItemIsEnabled;
+//Qt::ItemFlags GameControllerModel::flags(const QModelIndex &index) const
+//{
+//    if (!index.isValid())
+//        return Qt::ItemIsEnabled;
 
-    return QAbstractListModel::flags(index) | Qt::ItemIsEditable;
-}
+//    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+//}
 
 QHash<int, QByteArray> GameControllerModel::roleNames() const
 {
 
-    QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
+    QHash<int, QByteArray> roles = QAbstractTableModel::roleNames();
     roles[Position] = "position";
     roles[IsEmptyCell] = "isEmptyCell";
     roles[Color] = "color";
     roles[IsKing] = "isKing";
+    roles[IsActiveCell] = "isActiveCell";
 
 
     return roles;
 }
 
-int GameControllerModel::columnCount(const QModelIndex &) const
+int GameControllerModel::columnCount(const QModelIndex& parent) const
 {
+    Q_UNUSED(parent)
     return 8;
 }
