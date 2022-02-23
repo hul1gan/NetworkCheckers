@@ -26,3 +26,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     Checker.h \
     GameControllerModel.h
+
+DISTFILES += \
+    Pictures/White.png

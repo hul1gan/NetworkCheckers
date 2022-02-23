@@ -4,77 +4,49 @@ import QtQuick.Window 2.15
 import GameModel 1.0
 
 Row{
-
-    Rectangle { color: "white";
-        width: 50;
-        height: 50;
-        border.color: "black"
-        border.width: 1
+    CellSymbols {
         Text{
+            anchors.centerIn: parent
             text: "A"
         }
-
     }
-    Rectangle { color: "white";
-        width: 50;
-        height: 50;
-        border.color: "black"
-        border.width: 1
+    CellSymbols {
         Text{
+            anchors.centerIn: parent
             text: "B"
         }
     }
-    Rectangle { color: "white";
-        width: 50;
-        height: 50;
-        border.color: "black"
-        border.width: 1
+
+    CellSymbols {
         Text{
+            anchors.centerIn: parent
             text: "C"
         }
     }
-    Rectangle { color: "white";
-        width: 50;
-        height: 50;
-        border.color: "black"
-        border.width: 1
+    CellSymbols {
         Text{
+            anchors.centerIn: parent
             text: "D"
         }
-    }
-    Rectangle { color: "white";
-        width: 50;
-        height: 50;
-        border.color: "black"
-        border.width: 1
+    }    CellSymbols {
         Text{
+            anchors.centerIn: parent
             text: "E"
         }
     }
-    Rectangle { color: "white";
-        width: 50;
-        height: 50;
-        border.color: "black"
-        border.width: 1
+    CellSymbols {
         Text{
+            anchors.centerIn: parent
             text: "F"
         }
-    }
-    Rectangle { color: "white";
-        width: 50;
-        height: 50;
-        border.color: "black"
-        border.width: 1
+    }    CellSymbols {
         Text{
-            text: "G"
+            anchors.centerIn: parent
+            text: "J"
         }
-    }
-    Rectangle { color: "white";
-        width: 50;
-        height: 50;
-        border.color: "black"
-        border.width: 1
+    }    CellSymbols {
         Text{
+            anchors.centerIn: parent
             text: "H"
         }
     }

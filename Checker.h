@@ -1,10 +1,12 @@
 #ifndef CHECKER_H
 #define CHECKER_H
 
+#include <QString>
+
 struct Checker
 {
 public:
-    bool color = false;    //0 - white, 1 - black
+    QString checkerPath;
 
     bool isKing = false;  //0 - false, 1 - true
 

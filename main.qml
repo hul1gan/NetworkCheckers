@@ -9,10 +9,20 @@ Window {
     height: 700
     visible: true
 
+    color: "#1B2E1D"
+
     GameModel{
-   id:gameModel
+        id:gameModel
 
     }
+
+    Rectangle{
+        anchors.centerIn: parent
+
+        height:500
+        width: 500
+
+        color: "#61221F"
 
     TableView{
 
@@ -27,19 +37,23 @@ Window {
 
         delegate: Rectangle
         {
+            id:delegate
             implicitHeight: 50
             implicitWidth: 50
 
-            border.color: "black"
-            border.width: 1;
+            border.color: "#E7D8A7"
+            border.width: 0.2;
 
-            color: model.isActiveCell ? "gray"
-                                  : "white"
+            color: model.isActiveCell ? "#613E1F"
+                                      : "#BE9D80"
+            Image {
+                id: img
+                anchors.fill: delegate
+                source: model.isActiveCell&&(!model.isEmptyCell)?model.color: ""
 
 
+        }
     }
-
-
     }
 
     BoardLayoutNubmers {
@@ -62,9 +76,13 @@ Window {
         parent: tableModel
         anchors.top: tableModel.bottom
     }
+    }
+
+
 
 
 }
+
 
 
 

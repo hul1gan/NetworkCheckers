@@ -6,30 +6,39 @@ GameControllerModel::GameControllerModel(QObject *parent) : QAbstractTableModel(
 
     setTheStartBoard();
 
-    qDebug() << m_data.size();
-
-
 }
 
 void GameControllerModel::setTheStartBoard()
 {
 
     bool col = false;
+    int counter = 1;
 
     for(int i = 0; i < 64; i++){
 
         m_data.push_back(Checker{});
 
-        if(col == true)
-        {
+        if(col == true){
             m_data[i].isActiveCell = true;
-            //qDebug() << i << col;
+
+            qDebug() << counter;
+
+             if(counter == 1||counter == 2||counter == 3){
+                 m_data[i].isEmptyCell = false;
+                 m_data[i].checkerPath = "qrc:/Pictures/CowHead.svg";
+             }
+             else if(counter == 6||counter == 7||counter == 8){
+
+                 m_data[i].isEmptyCell = false;
+                 m_data[i].checkerPath = "qrc:/Pictures/HorseHead.svg";
+             }
 
         }
         if(((i+1)%8) == 0){
 
+            counter++;
+
         }else{
-            //qDebug() << "else";
             col = !col;}
     }
 }
@@ -68,7 +77,7 @@ QVariant GameControllerModel::data(const QModelIndex &index, int role) const
     }
     case Roles::Color:
     {
-        return QVariant::fromValue(m_data[elIndex].color);
+        return QVariant::fromValue(m_data[elIndex].checkerPath);
     }
     case Roles::IsKing:
     {
@@ -107,7 +116,7 @@ bool GameControllerModel::setData(const QModelIndex &index, const QVariant &valu
     }
     case Roles::Color:
     {
-        m_data[index.row()].color = value.toBool();
+        m_data[index.row()].checkerPath = value.toString();
         break;
     }
     case Roles::IsKing:
