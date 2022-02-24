@@ -6,5 +6,6 @@
         <file>Pictures/CowHead.svg</file>
         <file>Pictures/HorseHead.svg</file>
         <file>CellSymbols.qml</file>
+        <file>CellNumbers.qml</file>
     </qresource>
 </RCC>

@@ -4,9 +4,9 @@ import QtQuick.Window 2.15
 import GameModel 1.0
 
 Rectangle {
-    border.color: "#613E1F"
+    border.color: "Black"
     border.width: 1
-    color: "#BE8D62"
+    color: "#37435F"
     height: 25
     width: 50
 

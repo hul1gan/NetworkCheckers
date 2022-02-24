@@ -5,47 +5,55 @@ import GameModel 1.0
 
 Row{
     CellSymbols {
-        Text{
+        Text {
             anchors.centerIn: parent
             text: "A"
         }
     }
     CellSymbols {
-        Text{
+        Text {
             anchors.centerIn: parent
             text: "B"
         }
     }
 
     CellSymbols {
-        Text{
+        Text {
             anchors.centerIn: parent
             text: "C"
         }
     }
+
     CellSymbols {
-        Text{
+        Text {
             anchors.centerIn: parent
             text: "D"
         }
-    }    CellSymbols {
-        Text{
+    }
+
+    CellSymbols {
+        Text {
             anchors.centerIn: parent
             text: "E"
         }
     }
+
     CellSymbols {
-        Text{
+        Text {
             anchors.centerIn: parent
             text: "F"
         }
-    }    CellSymbols {
-        Text{
+    }
+
+    CellSymbols {
+        Text {
             anchors.centerIn: parent
             text: "J"
         }
-    }    CellSymbols {
-        Text{
+    }
+
+    CellSymbols {
+        Text {
             anchors.centerIn: parent
             text: "H"
         }

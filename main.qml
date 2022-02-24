@@ -9,73 +9,91 @@ Window {
     height: 700
     visible: true
 
-    color: "#1B2E1D"
+    color: "#333333"
 
-    GameModel{
+    GameModel {
         id:gameModel
-
     }
 
-    Rectangle{
+    Rectangle {
         anchors.centerIn: parent
 
         height:500
         width: 500
 
-        color: "#61221F"
+        color: "#86858d"
 
-    TableView{
+        TableView {
 
-        id: tableModel
+            id: tableModel
 
-        model:gameModel
-        anchors.centerIn: parent
-
-
-        height: 50*8
-        width: 50*8
-
-        delegate: Rectangle
-        {
-            id:delegate
-            implicitHeight: 50
-            implicitWidth: 50
-
-            border.color: "#E7D8A7"
-            border.width: 0.2;
-
-            color: model.isActiveCell ? "#613E1F"
-                                      : "#BE9D80"
-            Image {
-                id: img
-                anchors.fill: delegate
-                source: model.isActiveCell&&(!model.isEmptyCell)?model.color: ""
+            model:gameModel
+            anchors.centerIn: parent
 
 
+            height: 50*8
+            width: 50*8
+
+            delegate: Rectangle
+            {
+                readonly property color cellColor: model.isActiveCell ? "#9b7b73" : "#d3c9cc"
+
+                id:delegate
+                implicitHeight: 50
+                implicitWidth: 50
+
+                border.color: "#73717B"
+                border.width: 0.2;
+
+                color: mouse.containsMouse? Qt.lighter(cellColor, 1.3): cellColor
+
+                Image {
+                    id: img
+                    anchors.fill: delegate
+                    source: model.isActiveCell && (!model.isEmptyCell) ? model.color: ""
+                }
+
+                MouseArea
+                {
+                    id: mouse
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onClicked: {
+                        if(model.isActiveCell && (!model.isEmptyCell))
+                        {
+                            console.log("chose");
+                            gameModel.findWay(model.rowPosition, model.colPosition);
+                        }
+
+                    }
+                }
+                Text
+                {
+                    text: model.rowPosition.toString() + model.colPosition
+                }
+            }
         }
-    }
-    }
 
-    BoardLayoutNubmers {
-        parent: tableModel
-        anchors.right: tableModel.left
-    }
+        BoardLayoutNubmers {
+            parent: tableModel
+            anchors.right: tableModel.left
+        }
 
-    BoardLayoutNubmers {
-        parent: tableModel
-        anchors.left: tableModel.right
-    }
+        BoardLayoutNubmers {
+            parent: tableModel
+            anchors.left: tableModel.right
+        }
 
-    BoardLayoutSymbols {
-        parent: tableModel
-        anchors.bottom: tableModel.top
-    }
+        BoardLayoutSymbols {
+            parent: tableModel
+            anchors.bottom: tableModel.top
+        }
 
-
-    BoardLayoutSymbols {
-        parent: tableModel
-        anchors.top: tableModel.bottom
-    }
+        BoardLayoutSymbols {
+            parent: tableModel
+            anchors.top: tableModel.bottom
+        }
     }
 
 

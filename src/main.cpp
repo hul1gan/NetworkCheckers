@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include <GameControllerModel.h>
+#include <include/GameController.h>
 
 
 int main(int argc, char *argv[])
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<GameControllerModel>("GameModel", 1, 0, "GameModel");
+    qmlRegisterType<GameController>("GameModel", 1, 0, "GameModel");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));

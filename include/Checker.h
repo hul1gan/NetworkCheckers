@@ -8,13 +8,10 @@ struct Checker
 public:
     QString checkerPath;
 
-    bool isKing = false;  //0 - false, 1 - true
+    bool isKing = false;
 
-
-    bool isEmptyCell = true;
-    bool isActiveCell = false;
-
-    int position = 90;
+    int rowPosition = 0;
+    int columnPosition = 0;
 };
 
 #endif // CHECKER_H
