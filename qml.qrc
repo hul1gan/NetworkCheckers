@@ -3,9 +3,9 @@
         <file>main.qml</file>
         <file>BoardLayoutNubmers.qml</file>
         <file>BoardLayoutSymbols.qml</file>
-        <file>Pictures/CowHead.svg</file>
-        <file>Pictures/HorseHead.svg</file>
         <file>CellSymbols.qml</file>
         <file>CellNumbers.qml</file>
+        <file>Pictures/1.svg</file>
+        <file>Pictures/2.svg</file>
     </qresource>
 </RCC>

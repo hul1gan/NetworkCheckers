@@ -26,7 +26,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     include/Cell.h \
     include/Checker.h \
-    include/GameController.h
+    include/GameController.h \
+    include/UnitPosition.h
 
 DISTFILES += \
     Pictures/White.png

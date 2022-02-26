@@ -1,9 +1,10 @@
 #ifndef CELL_H
 #define CELL_H
 
-struct Cell
-{
+#include <include/UnitPosition.h>
 
+struct Cell: public UnitPosition
+{
     bool isEmptyCell = true;
     bool isActiveCell = false;
 

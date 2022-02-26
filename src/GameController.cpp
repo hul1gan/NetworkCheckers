@@ -10,10 +10,42 @@ GameController::GameController(QObject *parent) : QAbstractTableModel(parent){
 
 void GameController::findWay(int rowPosition, int colPosition)
 {
-    qDebug() << "SEARCHING";
-//    QVector<int> positions;
-//    return positions;
+    int backlightRowPosition;
+
+    if(rowPosition > 1)
+    {
+        backlightRowPosition = rowPosition - 1;
+    }
+
+    int firstCol = colPosition;
+    int secondtCol = 0;
+
+    if(colPosition > 1)
+    {
+        secondtCol = colPosition - 1;
+    }
+
+
+    auto it = m_data.begin();
+    while (it != m_data.end())
+    {
+        if(backlightRowPosition == it->rowPosition)
+        {
+            if(firstCol == it->columnPosition || secondtCol == it->columnPosition)
+            {
+                it->isHighlighted = true;
+                dataChanged(createIndex(0,0), createIndex(8, 8));
+            }
+        }
+
+        ++it;
+    }
+
+    //auto itt = std::find_if(m_data.begin(), m_data.end(), [&](int a, int b){ };
+
 }
+
+
 
 void GameController::setStartBoard()
 {
@@ -35,18 +67,22 @@ void GameController::setStartBoard()
             m_cell[i].isActiveCell = true;
             m_data[i].rowPosition = startRowPosition;
             m_data[i].columnPosition = startColPosition;
+
+            m_cell[i].rowPosition = startRowPosition;
+            m_cell[i].columnPosition = startColPosition;
+
             startColPosition++;
 
             if(counter == 1||counter == 2||counter == 3)
             {
                 m_cell[i].isEmptyCell = false;
-                m_data[i].checkerPath = "qrc:/Pictures/CowHead.svg";
+                m_data[i].imgPath = "qrc:/Pictures/2.svg";
             }
             else if(counter == 6||counter == 7||counter == 8)
             {
 
                 m_cell[i].isEmptyCell = false;
-                m_data[i].checkerPath = "qrc:/Pictures/HorseHead.svg";
+                m_data[i].imgPath = "qrc:/Pictures/1.svg";
 
             }
 
@@ -63,8 +99,9 @@ void GameController::setStartBoard()
             isActiveCell = !isActiveCell;
         }
 
-        //qDebug() << m_data[i].rowPosition << m_data[i].columnPosition;
     }
+
+
 
 }
 
@@ -74,7 +111,9 @@ int GameController::rowCount(const QModelIndex &parent) const
 
         return 0;
     }
+
     Q_UNUSED(parent);
+
     return 8;
 }
 
@@ -104,9 +143,13 @@ QVariant GameController::data(const QModelIndex &index, int role) const
     {
         return QVariant::fromValue(m_cell[elIndex].isEmptyCell);
     }
+    case Roles::IsHighlightedCell:
+    {
+        return QVariant::fromValue(m_data[elIndex].isHighlighted);
+    }
     case Roles::Color:
     {
-        return QVariant::fromValue(m_data[elIndex].checkerPath);
+        return QVariant::fromValue(m_data[elIndex].imgPath);
     }
     case Roles::IsKing:
     {
@@ -148,9 +191,14 @@ bool GameController::setData(const QModelIndex &index, const QVariant &value, in
         m_cell[index.row()].isEmptyCell = value.toBool();
         break;
     }
+    case Roles::IsHighlightedCell:
+    {
+        m_data[index.row()].isHighlighted = value.toBool();
+        break;
+    }
     case Roles::Color:
     {
-        m_data[index.row()].checkerPath = value.toString();
+        m_data[index.row()].imgPath = value.toString();
         break;
     }
     case Roles::IsKing:
@@ -171,20 +219,12 @@ bool GameController::setData(const QModelIndex &index, const QVariant &value, in
     return true;
 }
 
-//Qt::ItemFlags GameControllerModel::flags(const QModelIndex &index) const
-//{
-//    if (!index.isValid())
-//        return Qt::ItemIsEnabled;
-
-//    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
-//}
-
 QHash<int, QByteArray> GameController::roleNames() const
 {
-
     QHash<int, QByteArray> roles = QAbstractTableModel::roleNames();
     roles[RowPosition] = "rowPosition";
     roles[IsEmptyCell] = "isEmptyCell";
+    roles[IsHighlightedCell] = "isHighlightedCell";
     roles[Color] = "color";
     roles[IsKing] = "isKing";
     roles[IsActiveCell] = "isActiveCell";
@@ -198,5 +238,10 @@ int GameController::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
     return 8;
+}
+
+bool GameController::isFlippedBoard()
+{
+    return _isFlippedBoard;
 }
 

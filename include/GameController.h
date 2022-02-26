@@ -7,9 +7,14 @@
 #include <QObject>
 #include <QAbstractTableModel>
 
+#include <algorithm>
+
 class GameController: public QAbstractTableModel
 {
-        Q_OBJECT
+    Q_OBJECT
+
+    Q_PROPERTY(bool isFlippedBoard READ isFlippedBoard)
+
 public:
     explicit GameController(QObject *parent = nullptr);
 
@@ -19,6 +24,7 @@ public:
         ColPosition,
         IsEmptyCell,
         IsActiveCell,
+        IsHighlightedCell,
         Color,
         IsKing,
 
@@ -32,17 +38,19 @@ public:
     virtual QVariant data(const QModelIndex &index, int role) const override;
 
     virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;
-    //virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
 
-    // QAbstractItemModel interface
     virtual QHash<int, QByteArray> roleNames() const override;
 
     virtual int columnCount(const QModelIndex& parent) const override;
 
+    bool isFlippedBoard();
+
 private:
+
     QVector<Checker> m_data;
     QVector<Cell> m_cell;
 
+    bool _isFlippedBoard = false;
 };
 
 
