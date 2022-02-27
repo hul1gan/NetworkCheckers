@@ -1,7 +1,7 @@
 #include <include/GameController.h>
 
-GameController::GameController(QObject *parent) : QAbstractTableModel(parent){
-
+GameController::GameController(QObject *parent) : QAbstractTableModel(parent)
+{
     m_data.reserve(64);
     m_cell.reserve(64);
 
@@ -10,39 +10,53 @@ GameController::GameController(QObject *parent) : QAbstractTableModel(parent){
 
 void GameController::findWay(int rowPosition, int colPosition)
 {
-    int backlightRowPosition;
+    int index = (rowPosition-1) * 8 + colPosition;
 
-    if(rowPosition > 1)
+    m_data[index - 1].isSelected = true;
+
+    int row;
+
+    if(rowPosition != 1)
     {
-        backlightRowPosition = rowPosition - 1;
+        row = rowPosition - 1;
     }
 
-    int firstCol = colPosition;
-    int secondtCol = 0;
+    int col1;
+    int col2;
 
-    if(colPosition > 1)
+    if(colPosition == 1)
     {
-        secondtCol = colPosition - 1;
+        col1 = colPosition + 1;
     }
 
-
-    auto it = m_data.begin();
-    while (it != m_data.end())
+    else if(colPosition == 8)
     {
-        if(backlightRowPosition == it->rowPosition)
-        {
-            if(firstCol == it->columnPosition || secondtCol == it->columnPosition)
+        col1 = colPosition - 1;
+    }
+    else
+    {
+        col1 = colPosition - 1;
+        col2 = colPosition + 1;
+    }
+
+    //qDebug() << rowPosition << colPosition;
+
+
+    for(auto& element: m_data){
+
+        if(row == element.rowPosition){
+
+            if (col1 == element.columnPosition || col2 == element.columnPosition)
             {
-                it->isHighlighted = true;
+                element.isHighlighted = true;
                 dataChanged(createIndex(0,0), createIndex(8, 8));
             }
+
         }
 
-        ++it;
+
+
     }
-
-    //auto itt = std::find_if(m_data.begin(), m_data.end(), [&](int a, int b){ };
-
 }
 
 
@@ -71,7 +85,6 @@ void GameController::setStartBoard()
             m_cell[i].rowPosition = startRowPosition;
             m_cell[i].columnPosition = startColPosition;
 
-            startColPosition++;
 
             if(counter == 1||counter == 2||counter == 3)
             {
@@ -87,6 +100,9 @@ void GameController::setStartBoard()
             }
 
         }
+
+        startColPosition++;
+
         if(((i+1)%8) == 0)
         {
             counter++;
@@ -100,8 +116,6 @@ void GameController::setStartBoard()
         }
 
     }
-
-
 
 }
 
@@ -159,6 +173,10 @@ QVariant GameController::data(const QModelIndex &index, int role) const
     {
         return QVariant::fromValue(m_cell[elIndex].isActiveCell);
     }
+    case Roles::IsSelected:
+    {
+        return QVariant::fromValue(m_data[elIndex].isSelected);
+    }
 
     default:
     {
@@ -211,7 +229,11 @@ bool GameController::setData(const QModelIndex &index, const QVariant &value, in
         m_cell[index.row()].isActiveCell = value.toBool();
         break;
     }
-
+    case Roles::IsSelected:
+    {
+        m_data[index.row()].isSelected = value.toBool();
+        break;
+    }
     }
 
     emit dataChanged(index, index, QVector<int>() << role);
@@ -229,6 +251,7 @@ QHash<int, QByteArray> GameController::roleNames() const
     roles[IsKing] = "isKing";
     roles[IsActiveCell] = "isActiveCell";
     roles[ColPosition] = "colPosition";
+    roles[IsSelected] = "isSelected";
 
 
     return roles;

@@ -27,7 +27,7 @@ public:
         IsHighlightedCell,
         Color,
         IsKing,
-
+        IsSelected
     };
 
     Q_INVOKABLE void findWay(int rowPosition, int colPosition);
