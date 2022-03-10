@@ -1,18 +1,16 @@
 #ifndef CHECKER_H
 #define CHECKER_H
 
-#include <include/UnitPosition.h>
-
 #include <QString>
 
-struct Checker: public UnitPosition
+#include <include/AbstractFigure.h>
+
+struct Checker: public AbstractFigure
 {
-public:
     QString imgPath;
 
     bool isKing = false;
 
-    bool isHighlighted = false;
     bool isSelected = false;
 };
 

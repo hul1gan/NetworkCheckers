@@ -42,12 +42,16 @@ Window {
             border.color: "#73717B"
             border.width: 0.2;
 
-            color: model.isHighlightedCell || model.isSelected ? Qt.lighter(cellColor, 1.6): cellColor
+            color:model.isActiveCell ? "#333333" : Qt.lighter("#333333", 1.3)
+
+
+
+            //color: model.isHighlightedCell || model.isSelected ? Qt.lighter(cellColor, 1.6): cellColor
 
             Image {
                 id: img
                 anchors.fill: delegate
-                source: model.isActiveCell && (!model.isEmptyCell)  ? model.color: ""
+                //source: model.isActiveCell && (!model.isEmptyCell)  ? model.color: ""
                 antialiasing: true
                 //rotation: 180
             }
@@ -61,14 +65,10 @@ Window {
 
                 onClicked:
                 {
-                    if(model.isActiveCell && (!model.isEmptyCell))
-                    {
-                        console.log("chose");
-                        gameModel.findWay(model.row + 1, model.column + 1);
 
-                    }
+                    console.log(model.isActiveCell);
 
-                }
+                ;}
             }
 
         }
