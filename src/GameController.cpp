@@ -10,6 +10,7 @@ GameController::GameController(QObject *parent) : QAbstractTableModel(parent)
 
 GameController::~GameController(){}
 
+
 void GameController::findWay(int rowPosition, int colPosition)
 {
     //    int index = (rowPosition-1) * 8 + colPosition;
@@ -72,17 +73,16 @@ void GameController::setStartBoard()
 
     for(int i = 0; i < sizeBoard; ++i){
 
-        AbstractFigure* element = new AbstractFigure(std::move(row), std::move(col));
-        setFigure(element, row, col);
+        AbstractFigure* element = createFigure(row, col);
 
-        m_data.push_back(element);
+        //        m_data.push_back(element);
 
         col++;
 
         if(col > boardSize)
         {
-           row++;
-           col = 1;
+            row++;
+            col = 1;
         }
 
 
@@ -90,17 +90,6 @@ void GameController::setStartBoard()
 
 }
 
-void GameController::setFigure(AbstractFigure* ptr, int& rowPosition, int& colPosition)
-{
-    if(rowPosition%2 != 0 && colPosition%2 == 0)
-    {
-        ptr->isActivePosition = true;
-    }
-    else if(rowPosition%2 == 0 && colPosition%2 != 0)
-    {
-        ptr->isActivePosition = true;
-    }
-}
 
 int GameController::rowCount(const QModelIndex &parent) const
 {
@@ -121,13 +110,13 @@ QVariant GameController::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-        int row = index.row();
-        int column = index.column();
+    int row = index.row();
+    int column = index.column();
 
-        int elIndex = (boardSize * row ) + column ;
+    int elIndex = (boardSize * row ) + column ;
 
-        switch (role)
-        {
+    switch (role)
+    {
     //    case Roles::RowPosition:
     //    {
     //        return QVariant::fromValue(m_cell[elIndex].rowPosition);
@@ -136,45 +125,45 @@ QVariant GameController::data(const QModelIndex &index, int role) const
     //    {
     //        return QVariant::fromValue(m_cell[elIndex].columnPosition);
     //    }
-    //    case Roles::IsEmptyCell:
-    //    {
-    //        return QVariant::fromValue(m_cell[elIndex].isEmptyCell);
-    //    }
+    //        case Roles::IsEmptyCell:
+    //        {
+    //            return QVariant::fromValue(m_data[elIndex]->isEmpty());
+    //        }
     //    case Roles::IsHighlightedCell:
     //    {
     //        return QVariant::fromValue(m_cell[elIndex].isHighlighted);
     //    }
-    //    case Roles::Color:
-    //    {
-    //        return QVariant::fromValue(m_cell[elIndex].imgPath);
-    //    }
+    //        case Roles::Color:
+    //        {
+    //            return QVariant::fromValue(m_data[elIndex]->imgPath);
+    //        }
     //    case Roles::IsKing:
     //    {
     //        return QVariant::fromValue(m_cell[elIndex].isKing);
     //    }
-        case Roles::IsActiveCell:
-        {
-            return QVariant::fromValue(m_data[elIndex]->isActivePosition);
-        }
+    //        case Roles::IsActiveCell:
+    //        {
+    //            return QVariant::fromValue(m_data[elIndex]->isActivePosition);
+    //        }
     //    case Roles::IsSelected:
     //    {
     //        return QVariant::fromValue(m_cell[elIndex].isSelected);
     //    }
 
-        default:
-        {
-            return QVariant();
-        }
+    default:
+    {
+        return QVariant();
+    }
 
-        }
+    }
 
 }
 
 bool GameController::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-        if (!index.isValid()) {
-            return false;
-        }
+    if (!index.isValid()) {
+        return false;
+    }
 
     switch (role) {
     //    case Roles::RowPosition:
@@ -187,21 +176,22 @@ bool GameController::setData(const QModelIndex &index, const QVariant &value, in
     //        m_cell[index.row()].columnPosition = value.toInt();
     //        break;
     //    }
-    //    case Roles::IsEmptyCell:
-    //    {
-    //        m_cell[index.row()].isEmptyCell = value.toBool();
-    //        break;
-    //    }
+    //        case Roles::IsEmptyCell:
+    //        {
+    //            bool va = m_data[index.row()]->isEmpty();
+    //            va = value.toBool();
+    //            break;
+    //        }
     //    case Roles::IsHighlightedCell:
     //    {
     //        m_cell[index.row()].isHighlighted = value.toBool();
     //        break;
     //    }
-    //    case Roles::Color:
-    //    {
-    //        m_cell[index.row()].imgPath = value.toString();
-    //        break;
-    //    }
+    //        case Roles::Color:
+    //        {
+    //            m_data[index.row()]->imgPath = value.toString();
+    //            break;
+    //        }
     //    case Roles::IsKing:
     //    {
     //        m_cell[index.row()].isKing = value.toBool();
@@ -212,7 +202,7 @@ bool GameController::setData(const QModelIndex &index, const QVariant &value, in
         m_data[index.row()]->isActivePosition = value.toBool();
         break;
     }
-//    }
+        //    }
         //    case Roles::IsSelected:
         //    {
         //        m_cell[index.row()].isSelected = value.toBool();
@@ -220,11 +210,11 @@ bool GameController::setData(const QModelIndex &index, const QVariant &value, in
         //    }
         //    }
 
-//        emit dataChanged(index, index, QVector<int>() << role);
+        //        emit dataChanged(index, index, QVector<int>() << role);
 
-//        return true;
+        //        return true;
 
-}}
+    }}
 
 QHash<int, QByteArray> GameController::roleNames() const
 {
@@ -234,7 +224,7 @@ QHash<int, QByteArray> GameController::roleNames() const
     //roles[IsHighlightedCell] = "isHighlightedCell";
     //roles[Color] = "color";
     // roles[IsKing] = "isKing";
-     roles[IsActiveCell] = "isActiveCell";
+    roles[IsActiveCell] = "isActiveCell";
     //roles[ColPosition] = "colPosition";
     //roles[IsSelected] = "isSelected";
 
@@ -252,5 +242,14 @@ int GameController::columnCount(const QModelIndex& parent) const
 bool GameController::isFlippedBoard()
 {
     return _isFlippedBoard;
+}
+
+AbstractFigure* GameController::createFigure(int row, int col)
+{
+    if(row%2 != 0 && col%2 != 0)
+    {
+        return new VoidChecker(&row, &col);
+    }
+    //else if(row > 5 && )
 }
 

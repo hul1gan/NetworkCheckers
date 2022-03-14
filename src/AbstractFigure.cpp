@@ -1,7 +1,17 @@
 #include <include/AbstractFigure.h>
 
-AbstractFigure::AbstractFigure(int &&row, int &&col)
+AbstractFigure::AbstractFigure(int* row, int* col)
 {
-    this->rowPosition = row;
-    this->rowPosition = col;
+    this->colPosition = *col;
+    this->rowPosition = *row;
+}
+
+AbstractFigure::~AbstractFigure()
+{
+
+}
+
+bool AbstractFigure::isEmpty()
+{
+    return false;
 }

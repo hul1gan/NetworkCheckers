@@ -2,10 +2,17 @@
 #define VOIDCHECKER_H
 
 #include <include/AbstractFigure.h>
+#include <QObject>
 
-struct voidChecker:public AbstractFigure
+class VoidChecker:public AbstractFigure
 {
+public:
+
+    VoidChecker(int* col, int* row): AbstractFigure(col, row){};
+    virtual bool isEmpty() override;
+
     bool isHighlighted = false;
 };
+
 
 #endif // VOIDCHECKER_H

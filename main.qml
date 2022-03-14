@@ -51,7 +51,7 @@ Window {
             Image {
                 id: img
                 anchors.fill: delegate
-                //source: model.isActiveCell && (!model.isEmptyCell)  ? model.color: ""
+                source: model.isActiveCell && (!model.isEmptyCell)  ? model.color: ""
                 antialiasing: true
                 //rotation: 180
             }

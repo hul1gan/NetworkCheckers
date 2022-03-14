@@ -8,6 +8,7 @@ CONFIG += c++14
 
 SOURCES += \
         src/AbstractFigure.cpp \
+        src/Checker.cpp \
         src/GameController.cpp \
         src/main.cpp
 

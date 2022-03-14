@@ -5,13 +5,17 @@
 
 #include <include/AbstractFigure.h>
 
-struct Checker: public AbstractFigure
+class Checker: public AbstractFigure
 {
-    QString imgPath;
+public:
+
+    Checker(int* col, int* row): AbstractFigure(col, row){};
 
     bool isKing = false;
 
     bool isSelected = false;
+
+    virtual bool isEmpty() override;
 };
 
 #endif // CHECKER_H

@@ -1,14 +1,14 @@
-#ifndef MODEL_H
+﻿#ifndef MODEL_H
 #define MODEL_H
 
 #include <include/AbstractFigure.h>
+#include <include/Checker.h>
+#include <include/VoidChecker.h>
 
 #include <QObject>
 #include <QAbstractTableModel>
 
 #include <algorithm>
-
-
 
 class GameController: public QAbstractTableModel
 {
@@ -35,7 +35,6 @@ public:
     Q_INVOKABLE void findWay(int rowPosition, int colPosition);
 
     void setStartBoard();
-    void setFigure(AbstractFigure* ptr, int& rowPosition, int& colPosition);
 
     virtual int rowCount(const QModelIndex &parent) const override;
     virtual QVariant data(const QModelIndex &index, int role) const override;
@@ -47,6 +46,8 @@ public:
     virtual int columnCount(const QModelIndex& parent) const override;
 
     bool isFlippedBoard();
+
+    static AbstractFigure* createFigure(int row, int cal);
 
     static const int boardSize = 8;
 
