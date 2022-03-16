@@ -19,7 +19,6 @@ Window {
     }
 
     TableView {
-        //rotation: 180
 
         id: tableModel
 
@@ -33,7 +32,7 @@ Window {
         delegate: Rectangle
         {
 
-            readonly property color cellColor: model.isActiveCell ? "#333333" : Qt.lighter("#333333", 1.3)
+            readonly property color cellColor: model.figure.isActiveCell ? "#333333" : Qt.lighter("#333333", 1.3)
 
             id:delegate
             implicitHeight: heightCell
@@ -42,16 +41,12 @@ Window {
             border.color: "#73717B"
             border.width: 0.2;
 
-            color:model.isActiveCell ? "#333333" : Qt.lighter("#333333", 1.3)
-
-
-
-            //color: model.isHighlightedCell || model.isSelected ? Qt.lighter(cellColor, 1.6): cellColor
+            color: model.figure.isSelected ? Qt.lighter(cellColor, 1.6): cellColor
 
             Image {
                 id: img
                 anchors.fill: delegate
-                source: model.isActiveCell && (!model.isEmptyCell)  ? model.color: ""
+                source: model.figure.imgPath
                 antialiasing: true
                 //rotation: 180
             }
@@ -61,14 +56,12 @@ Window {
                 id: mouse
                 anchors.fill: parent
                 hoverEnabled: true
-
-
                 onClicked:
                 {
+                    gameModel.findWay(row + 1, column + 1);
+                    console.log(index);
 
-                    console.log(model.isActiveCell);
-
-                ;}
+                    ;}
             }
 
         }

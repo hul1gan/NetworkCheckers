@@ -1,6 +1,7 @@
 #include <include/Checker.h>
 
-bool Checker::isEmpty()
+
+Checker::Checker(QObject *parent):AbstractFigure(parent)
 {
-    return false;
+
 }

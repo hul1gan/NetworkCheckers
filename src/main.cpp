@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<GameController>("GameModel", 1, 0, "GameModel");
 
+    GameController game;
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

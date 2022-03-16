@@ -1,20 +1,19 @@
-﻿#ifndef MODEL_H
-#define MODEL_H
+﻿#pragma once
 
 #include <include/AbstractFigure.h>
 #include <include/Checker.h>
 #include <include/VoidChecker.h>
 
 #include <QObject>
-#include <QAbstractTableModel>
+#include <QAbstractListModel>
 
 #include <algorithm>
 
-class GameController: public QAbstractTableModel
+class GameController: public QAbstractListModel
 {
     Q_OBJECT
-
     Q_PROPERTY(bool isFlippedBoard READ isFlippedBoard)
+
 
 public:
     explicit GameController(QObject *parent = nullptr);
@@ -25,16 +24,17 @@ public:
         RowPosition = Qt::UserRole + 1,
         ColPosition,
         IsEmptyCell,
-        IsActiveCell,
         IsHighlightedCell,
         Color,
         IsKing,
-        IsSelected
+        IsSelected,
+        FigureRole
     };
 
     Q_INVOKABLE void findWay(int rowPosition, int colPosition);
 
-    void setStartBoard();
+
+    void boardInit();
 
     virtual int rowCount(const QModelIndex &parent) const override;
     virtual QVariant data(const QModelIndex &index, int role) const override;
@@ -56,8 +56,11 @@ private:
     QVector<AbstractFigure*> m_data;
 
     bool _isFlippedBoard = false;
+
+    QVector<int> _selectedCells;
+
+    void cancelSelectedCells();
 };
 
 
 
-#endif // MODEL_H

@@ -1,18 +1,18 @@
-#ifndef VOIDCHECKER_H
-#define VOIDCHECKER_H
+#pragma once
 
 #include <include/AbstractFigure.h>
 #include <QObject>
 
-class VoidChecker:public AbstractFigure
+class VoidChecker: public AbstractFigure
 {
 public:
 
-    VoidChecker(int* col, int* row): AbstractFigure(col, row){};
-    virtual bool isEmpty() override;
+    VoidChecker(QObject* parent = nullptr);
+    ~VoidChecker();
 
     bool isHighlighted = false;
+
 };
 
 
-#endif // VOIDCHECKER_H
+

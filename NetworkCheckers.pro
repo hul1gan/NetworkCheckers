@@ -10,6 +10,7 @@ SOURCES += \
         src/AbstractFigure.cpp \
         src/Checker.cpp \
         src/GameController.cpp \
+        src/VoidChecker.cpp \
         src/main.cpp
 
 RESOURCES += qml.qrc

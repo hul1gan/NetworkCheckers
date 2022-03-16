@@ -1,5 +1,4 @@
-#ifndef CHECKER_H
-#define CHECKER_H
+#pragma once
 
 #include <QString>
 
@@ -9,13 +8,10 @@ class Checker: public AbstractFigure
 {
 public:
 
-    Checker(int* col, int* row): AbstractFigure(col, row){};
+    Checker(QObject* parent = nullptr);
 
     bool isKing = false;
 
     bool isSelected = false;
 
-    virtual bool isEmpty() override;
 };
-
-#endif // CHECKER_H

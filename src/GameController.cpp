@@ -1,11 +1,11 @@
 #include <include/GameController.h>
 
-GameController::GameController(QObject *parent) : QAbstractTableModel(parent)
+GameController::GameController(QObject *parent) : QAbstractListModel(parent)
 {
     m_data.reserve(boardSize*boardSize);
     m_data.shrink_to_fit();
 
-    setStartBoard();
+    boardInit();
 }
 
 GameController::~GameController(){}
@@ -13,58 +13,64 @@ GameController::~GameController(){}
 
 void GameController::findWay(int rowPosition, int colPosition)
 {
-    //    int index = (rowPosition-1) * 8 + colPosition;
-
-    //    m_cell[index - 1].isSelected = true;
-
-    //    int row;
-
-    //    if(rowPosition != 1)
-    //    {
-    //        row = rowPosition - 1;
-    //    }
-
-    //    int col1;
-    //    int col2;
-
-    //    if(colPosition == 1)
-    //    {
-    //        col1 = colPosition + 1;
-    //    }
-
-    //    else if(colPosition == 8)
-    //    {
-    //        col1 = colPosition - 1;
-    //    }
-    //    else
-    //    {
-    //        col1 = colPosition - 1;
-    //        col2 = colPosition + 1;
-    //    }
-
-    //    //qDebug() << rowPosition << colPosition;
 
 
-    //    for(auto& element: m_cell){
+    cancelSelectedCells();
 
-    //        if(row == element.rowPosition){
+    int index = (rowPosition-1) * 8 + colPosition;
 
-    //            if (col1 == element.columnPosition || col2 == element.columnPosition)
-    //            {
-    //                element.isHighlighted = true;
-    //                dataChanged(createIndex(0,0), createIndex(8, 8));
-    //            }
+    m_data[index - 1]->setSelectCell(true);
+    _selectedCells.push_back(index - 1);
 
-    //        }
+    int row;
 
+    if(rowPosition != 1)
+    {
+        row = rowPosition - 1;
+    }
 
+    int col1;
+    int col2;
 
+    if(colPosition == 1)
+    {
+        col1 = colPosition + 1;
+    }
+
+    else if(colPosition == boardSize)
+    {
+        col1 = colPosition - 1;
+    }
+    else
+    {
+        col1 = colPosition - 1;
+        col2 = colPosition + 1;
+    }
+
+    //qDebug() << rowPosition << colPosition;
+
+    int counter = 0;
+
+    for(auto& element: m_data){
+
+        if(row == element->rowPosition){
+
+            if (col1 == element->colPosition || col2 == element->colPosition)
+            {
+                element->setSelectCell(true);
+                _selectedCells.push_back(counter);
+                dataChanged(createIndex(0,0), createIndex(8, 8));
+            }
+
+        }
+        counter++;
+    }
 }
 
 
 
 
-void GameController::setStartBoard()
+void GameController::boardInit()
 {
     int sizeBoard = boardSize * boardSize;
 
@@ -73,9 +79,7 @@ void GameController::setStartBoard()
 
     for(int i = 0; i < sizeBoard; ++i){
 
-        AbstractFigure* element = createFigure(row, col);
-
-        //        m_data.push_back(element);
+        m_data.push_back(createFigure(row, col));
 
         col++;
 
@@ -85,7 +89,7 @@ void GameController::setStartBoard()
             col = 1;
         }
 
-
+        //qDebug() << m_data[i]->isActiveCell();
     }
 
 }
@@ -117,38 +121,18 @@ QVariant GameController::data(const QModelIndex &index, int role) const
 
     switch (role)
     {
-    //    case Roles::RowPosition:
-    //    {
-    //        return QVariant::fromValue(m_cell[elIndex].rowPosition);
-    //    }
-    //    case Roles::ColPosition:
-    //    {
-    //        return QVariant::fromValue(m_cell[elIndex].columnPosition);
-    //    }
-    //        case Roles::IsEmptyCell:
-    //        {
-    //            return QVariant::fromValue(m_data[elIndex]->isEmpty());
-    //        }
-    //    case Roles::IsHighlightedCell:
-    //    {
-    //        return QVariant::fromValue(m_cell[elIndex].isHighlighted);
-    //    }
-    //        case Roles::Color:
-    //        {
-    //            return QVariant::fromValue(m_data[elIndex]->imgPath);
-    //        }
-    //    case Roles::IsKing:
-    //    {
-    //        return QVariant::fromValue(m_cell[elIndex].isKing);
-    //    }
-    //        case Roles::IsActiveCell:
-    //        {
-    //            return QVariant::fromValue(m_data[elIndex]->isActivePosition);
-    //        }
-    //    case Roles::IsSelected:
-    //    {
-    //        return QVariant::fromValue(m_cell[elIndex].isSelected);
-    //    }
+    case Roles::RowPosition:
+    {
+        return QVariant::fromValue(m_data[elIndex]->rowPosition);
+    }
+    case Roles::ColPosition:
+    {
+        return QVariant::fromValue(m_data[elIndex]->colPosition);
+    }
+    case FigureRole:
+    {
+        return QVariant::fromValue(m_data[elIndex]);
+    }
 
     default:
     {
@@ -166,67 +150,30 @@ bool GameController::setData(const QModelIndex &index, const QVariant &value, in
     }
 
     switch (role) {
-    //    case Roles::RowPosition:
-    //    {
-    //        m_cell[index.row()].rowPosition = value.toInt();
-    //        break;
-    //    }
-    //    case Roles::ColPosition:
-    //    {
-    //        m_cell[index.row()].columnPosition = value.toInt();
-    //        break;
-    //    }
-    //        case Roles::IsEmptyCell:
-    //        {
-    //            bool va = m_data[index.row()]->isEmpty();
-    //            va = value.toBool();
-    //            break;
-    //        }
-    //    case Roles::IsHighlightedCell:
-    //    {
-    //        m_cell[index.row()].isHighlighted = value.toBool();
-    //        break;
-    //    }
-    //        case Roles::Color:
-    //        {
-    //            m_data[index.row()]->imgPath = value.toString();
-    //            break;
-    //        }
-    //    case Roles::IsKing:
-    //    {
-    //        m_cell[index.row()].isKing = value.toBool();
-    //        break;
-    //    }
-    case Roles::IsActiveCell:
+    case Roles::RowPosition:
     {
-        m_data[index.row()]->isActivePosition = value.toBool();
+        m_data[index.row()]->rowPosition = value.toInt();
         break;
     }
-        //    }
-        //    case Roles::IsSelected:
-        //    {
-        //        m_cell[index.row()].isSelected = value.toBool();
-        //        break;
-        //    }
-        //    }
+    case Roles::ColPosition:
+    {
+        m_data[index.row()]->colPosition = value.toInt();
+        break;
+    }
 
-        //        emit dataChanged(index, index, QVector<int>() << role);
+        emit dataChanged(index, index, QVector<int>() << role);
 
-        //        return true;
+        return true;
 
-    }}
+    }
+}
 
 QHash<int, QByteArray> GameController::roleNames() const
 {
-    QHash<int, QByteArray> roles = QAbstractTableModel::roleNames();
-    //roles[RowPosition] = "rowPosition";
-    //roles[IsEmptyCell] = "isEmptyCell";
-    //roles[IsHighlightedCell] = "isHighlightedCell";
-    //roles[Color] = "color";
-    // roles[IsKing] = "isKing";
-    roles[IsActiveCell] = "isActiveCell";
-    //roles[ColPosition] = "colPosition";
-    //roles[IsSelected] = "isSelected";
+    QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
+    roles[RowPosition] = "rowPosition";
+    roles[ColPosition] = "colPosition";
+    roles[FigureRole] = "figure";
 
 
     return roles;
@@ -246,10 +193,47 @@ bool GameController::isFlippedBoard()
 
 AbstractFigure* GameController::createFigure(int row, int col)
 {
-    if(row%2 != 0 && col%2 != 0)
+    if((row%2 != 0 && col%2 != 0) || (row%2 == 0 && col%2 == 0))
     {
-        return new VoidChecker(&row, &col);
+        VoidChecker* newChecker = new VoidChecker();
+        newChecker->setPosition(row, col);
+        return newChecker;
     }
-    //else if(row > 5 && )
+    else if(row < 4)
+    {
+        Checker* newChecker = new Checker();
+        newChecker->setPosition(row, col);
+        newChecker->setImgPath("qrc:/Pictures/2.svg");
+        newChecker->setActive(true);
+        newChecker->setContainFigure(true);
+        return newChecker;
+    }
+    else if(row > 5)
+    {
+        Checker* newChecker = new Checker();
+        newChecker->setPosition(row, col);
+        newChecker->setImgPath("qrc:/Pictures/1.svg");
+        newChecker->setActive(true);
+        newChecker->setContainFigure(true);
+        return newChecker;
+    }
+    else
+    {
+        VoidChecker* newChecker = new VoidChecker();
+        newChecker->setPosition(row, col);
+        newChecker->setActive(true);
+        return newChecker;
+    }
+}
+
+void GameController::cancelSelectedCells()
+{
+    for(int i = 0; i < _selectedCells.size(); ++i)
+    {
+        m_data[_selectedCells.at(i)]->setSelectCell(false);
+        qDebug() << i;
+    }
+
+    _selectedCells.clear();
 }
 
