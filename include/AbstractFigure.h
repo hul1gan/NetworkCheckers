@@ -6,27 +6,26 @@
 class AbstractFigure: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool isActiveCell READ isActiveCell WRITE setActive NOTIFY activeCellChanged)
-    Q_PROPERTY(bool isSelected READ isSelected WRITE setSelectCell NOTIFY selectChanged)
+    Q_PROPERTY(bool isActiveCell READ isActiveCell WRITE setActiveCell NOTIFY activeCellChanged)
+    Q_PROPERTY(bool isSelectedCell READ isSelectedCell WRITE setSelectCell NOTIFY selectCellChanged)
     Q_PROPERTY(QString imgPath READ getImgPath WRITE setImgPath NOTIFY imgPathChanged)
     Q_PROPERTY(bool isContainFigure READ isContainFigure WRITE setContainFigure NOTIFY containFigureChanged)
 
 public:
 
     AbstractFigure(QObject* parent = nullptr);
-
     virtual ~AbstractFigure();
 
-    int rowPosition;
-    int colPosition;
 
     void setPosition(int row, int col);
+    int getRow();
+    int getColumn();
 
 
     bool isActiveCell() const;
-    void setActive(bool newIsActiveCell);
+    void setActiveCell(bool newIsActiveCell);
 
-    bool isSelected() const;
+    bool isSelectedCell() const;
     void setSelectCell(bool newIsSelected);
 
     const QString &getImgPath() const;
@@ -35,10 +34,11 @@ public:
     bool isContainFigure() const;
     void setContainFigure(bool newIsContainFigure);
 
+
 signals:
     void activeCellChanged();
 
-    void selectChanged();
+    void selectCellChanged();
 
     void imgPathChanged();
 
@@ -53,6 +53,10 @@ private:
     QString m_imgPath = "";
 
     bool m_isContainFigure;
+
+    int _row;
+    int _column;
+
 };
 
 

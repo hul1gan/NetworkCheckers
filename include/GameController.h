@@ -12,54 +12,44 @@
 class GameController: public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(bool isFlippedBoard READ isFlippedBoard)
-
 
 public:
+
     explicit GameController(QObject *parent = nullptr);
     ~GameController();
 
     enum Roles
     {
-        RowPosition = Qt::UserRole + 1,
-        ColPosition,
-        IsEmptyCell,
-        IsHighlightedCell,
-        Color,
-        IsKing,
-        IsSelected,
-        FigureRole
+        FigureRole = Qt::UserRole + 1,
+        FlippedBoard
     };
 
-    Q_INVOKABLE void findWay(int rowPosition, int colPosition);
+    Q_INVOKABLE void findPossibleWays(int rowPosition, int colPosition);
+    Q_INVOKABLE bool isFlippedBoard();
 
 
     void boardInit();
+    void swap(int oldPositionRow, int oldPositionCol, int newPositionRow, int newPositionCol);
 
     virtual int rowCount(const QModelIndex &parent) const override;
     virtual QVariant data(const QModelIndex &index, int role) const override;
-
-    virtual bool setData(const QModelIndex &index, const QVariant &value, int role) override;
-
     virtual QHash<int, QByteArray> roleNames() const override;
-
     virtual int columnCount(const QModelIndex& parent) const override;
 
-    bool isFlippedBoard();
 
     static AbstractFigure* createFigure(int row, int cal);
 
-    static const int boardSize = 8;
+    static const int BOARDROWSIZE = 8;
 
 private:
 
     QVector<AbstractFigure*> m_data;
+    QVector<int> _indexOfSelectedCells;
 
-    bool _isFlippedBoard = false;
+    bool _isFlippedBoard = true;
 
-    QVector<int> _selectedCells;
+    void _cancelSelectedCells();
 
-    void cancelSelectedCells();
 };
 
 

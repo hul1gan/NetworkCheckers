@@ -9,9 +9,8 @@ class Checker: public AbstractFigure
 public:
 
     Checker(QObject* parent = nullptr);
+    ~Checker() = default;
 
     bool isKing = false;
-
-    bool isSelected = false;
 
 };

@@ -2,15 +2,28 @@
 
 AbstractFigure::AbstractFigure(QObject *parent): QObject(parent)
 {
+
 }
 
 AbstractFigure::~AbstractFigure()
-{}
+{
+
+}
 
 void AbstractFigure::setPosition(int row, int col)
 {
-    this->colPosition = col;
-    this->rowPosition = row;
+    this->_column = col;
+    this->_row = row;
+}
+
+int AbstractFigure::getRow()
+{
+    return _row;
+}
+
+int AbstractFigure::getColumn()
+{
+    return _column;
 }
 
 
@@ -19,15 +32,19 @@ bool AbstractFigure::isActiveCell() const
     return m_isActiveCell;
 }
 
-void AbstractFigure::setActive(bool newIsActiveCell)
+void AbstractFigure::setActiveCell(bool newIsActiveCell)
 {
     if (m_isActiveCell == newIsActiveCell)
+    {
         return;
+    }
+
     m_isActiveCell = newIsActiveCell;
+
     emit activeCellChanged();
 }
 
-bool AbstractFigure::isSelected() const
+bool AbstractFigure::isSelectedCell() const
 {
     return m_isSelected;
 }
@@ -35,9 +52,13 @@ bool AbstractFigure::isSelected() const
 void AbstractFigure::setSelectCell(bool newIsSelected)
 {
     if (m_isSelected == newIsSelected)
+    {
         return;
+    }
+
     m_isSelected = newIsSelected;
-    emit selectChanged();
+
+    emit selectCellChanged();
 }
 
 const QString &AbstractFigure::getImgPath() const
@@ -48,8 +69,12 @@ const QString &AbstractFigure::getImgPath() const
 void AbstractFigure::setImgPath(const QString &newImgPath)
 {
     if (m_imgPath == newImgPath)
+    {
         return;
+    }
+
     m_imgPath = newImgPath;
+
     emit imgPathChanged();
 }
 
@@ -61,7 +86,13 @@ bool AbstractFigure::isContainFigure() const
 void AbstractFigure::setContainFigure(bool newIsContainFigure)
 {
     if (m_isContainFigure == newIsContainFigure)
+    {
         return;
+    }
+
     m_isContainFigure = newIsContainFigure;
+
     emit containFigureChanged();
 }
+
+

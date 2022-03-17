@@ -9,9 +9,6 @@ public:
 
     VoidChecker(QObject* parent = nullptr);
     ~VoidChecker();
-
-    bool isHighlighted = false;
-
 };
 
 
