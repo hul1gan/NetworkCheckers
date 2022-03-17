@@ -96,3 +96,20 @@ void AbstractFigure::setContainFigure(bool newIsContainFigure)
 }
 
 
+
+bool AbstractFigure::isHighLightCell() const
+{
+    return m_isHighLightCell;
+}
+
+void AbstractFigure::setHighLightCell(bool newIsHighLightCell)
+{
+    if (m_isHighLightCell == newIsHighLightCell)
+    {
+        return;
+    }
+
+    m_isHighLightCell = newIsHighLightCell;
+
+    emit highLightCellChanged();
+}

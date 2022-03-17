@@ -10,6 +10,7 @@ class AbstractFigure: public QObject
     Q_PROPERTY(bool isSelectedCell READ isSelectedCell WRITE setSelectCell NOTIFY selectCellChanged)
     Q_PROPERTY(QString imgPath READ getImgPath WRITE setImgPath NOTIFY imgPathChanged)
     Q_PROPERTY(bool isContainFigure READ isContainFigure WRITE setContainFigure NOTIFY containFigureChanged)
+    Q_PROPERTY(bool isHighLightCell READ isHighLightCell WRITE setHighLightCell NOTIFY highLightCellChanged)
 
 public:
 
@@ -35,6 +36,9 @@ public:
     void setContainFigure(bool newIsContainFigure);
 
 
+    bool isHighLightCell() const;
+    void setHighLightCell(bool newIsHighLightCell);
+
 signals:
     void activeCellChanged();
 
@@ -44,11 +48,14 @@ signals:
 
     void containFigureChanged();
 
+    void highLightCellChanged();
+
 private:
 
     bool m_isActiveCell = false;
     bool m_isSelected = false;
     bool m_isContain = false;
+    bool m_isHighLightCell = false;
 
     QString m_imgPath = "";
 

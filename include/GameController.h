@@ -25,11 +25,13 @@ public:
     };
 
     Q_INVOKABLE void findPossibleWays(int rowPosition, int colPosition);
+    Q_INVOKABLE void checkPossibilityMove(int newRow, int newColumn);
+
     Q_INVOKABLE bool isFlippedBoard();
 
 
     void boardInit();
-    void swap(int oldPositionRow, int oldPositionCol, int newPositionRow, int newPositionCol);
+    void swap(int indexPrevius, int indexNew);
 
     virtual int rowCount(const QModelIndex &parent) const override;
     virtual QVariant data(const QModelIndex &index, int role) const override;
@@ -44,9 +46,11 @@ public:
 private:
 
     QVector<AbstractFigure*> m_data;
-    QVector<int> _indexOfSelectedCells;
+    QVector<int> _indexOfHightlightCells;
 
-    bool _isFlippedBoard = true;
+    bool _isFlippedBoard = false;
+
+    int _currentSelectesCellIndex;
 
     void _cancelSelectedCells();
 

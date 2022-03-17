@@ -18,6 +18,7 @@ Window {
     Rectangle{
 
         readonly property int isRotae: gameModel.isFlippedBoard()? 180 : 0
+        property int counter: 0
 
         id: mainRectangle
 
@@ -46,6 +47,7 @@ Window {
             height: heightCell*8
             width: widthCell*8
 
+
             delegate: Rectangle
             {
 
@@ -58,9 +60,7 @@ Window {
                 border.color: "#73717B"
                 border.width: 0.2;
 
-                color: model.figure.isSelectedCell ? Qt.lighter(cellColor, 1.6): cellColor
-
-
+                color: model.figure.isSelected ? "lightgoldenrodyellow": (model.figure.isHighLightCell ? Qt.lighter(cellColor, 1.6) :( cellColor))
 
                 Image {
 
@@ -72,31 +72,36 @@ Window {
                     rotation: mainRectangle.isRotae
                 }
 
+
                 MouseArea
                 {
                     id: mouse
                     anchors.fill: parent
                     hoverEnabled: true
 
-                    property int counter: 0
-
                     onClicked:
                     {
-                        counter++;
-                        gameModel.findPossibleWays(row + 1, column + 1);
+                       // model.figure.isSelected = true;
+                        mainRectangle.counter ++;
 
-                        //let rowPos = row + 1;
-                        //let colPos = column + 1;
 
-                        if(counter == 2)
+                        if(mainRectangle.counter == 2)
                         {
-
+                            gameModel.checkPossibilityMove(row + 1, column + 1);
+                            mainRectangle.counter = 0;
+                        }
+                        else
+                        {
+                        gameModel.findPossibleWays(row + 1, column + 1);
                         }
 
 
 
-                        ;}
-                }
+                    }
+
+                    }
+
+
 
             }
         }

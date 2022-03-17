@@ -23,11 +23,12 @@ void GameController::findPossibleWays(int rowPosition, int colPosition)
 
     _cancelSelectedCells();
 
-
-
     m_data[index - 1]->setSelectCell(true);
+    _currentSelectesCellIndex = index - 1;
 
-    _indexOfSelectedCells.push_back(index - 1);
+    //m_data[index - 1]->setHighLightCell(true);
+
+    //_indexOfHightlightCells.push_back(index - 1);
 
     int row;
 
@@ -73,14 +74,32 @@ void GameController::findPossibleWays(int rowPosition, int colPosition)
 
             if (colPosition1 == element->getColumn()|| colPosition2 == element->getColumn())
             {
-                element->setSelectCell(true);
-                _indexOfSelectedCells.push_back(counter);
+                element->setHighLightCell(true);
+                _indexOfHightlightCells.push_back(counter);
                 dataChanged(createIndex(0,0), createIndex(8, 8));
             }
 
         }
         counter++;
     }
+}
+
+void GameController::checkPossibilityMove(int newRow, int newColumn)
+{
+    qDebug() << "checkPossibilityMove";
+
+    for(qsizetype i = 0; i < _indexOfHightlightCells.size(); i++)
+    {
+        if(m_data[_indexOfHightlightCells[i]]->getColumn() == newColumn && m_data[_indexOfHightlightCells[i]]->getRow() == newRow)
+        {
+            int index = ((newRow - 1) * BOARDROWSIZE + newColumn) - 1;
+            swap(_currentSelectesCellIndex, index);
+
+        };
+    }
+
+    _currentSelectesCellIndex = -1;
+
 }
 
 bool GameController::isFlippedBoard()
@@ -115,8 +134,18 @@ void GameController::boardInit()
 
 }
 
-void GameController::swap(int oldPositionRow, int oldPositionCol, int newPositionRow, int newPositionCol)
+void GameController::swap(int indexPrevius, int indexNew)
 {
+
+    AbstractFigure* numerousObject;
+    numerousObject = m_data[indexPrevius];
+
+    m_data[indexPrevius] = m_data[indexNew];
+
+    m_data[indexNew] = numerousObject;
+
+    _cancelSelectedCells();
+
 
 }
 
@@ -226,10 +255,10 @@ AbstractFigure* GameController::createFigure(int row, int col)
 void GameController::_cancelSelectedCells()
 {
 
-    for(qsizetype i = 0; i < _indexOfSelectedCells.size(); i++)
+    for(qsizetype i = 0; i < _indexOfHightlightCells.size(); i++)
     {
-        m_data[_indexOfSelectedCells[i]]->setSelectCell(false);
+        m_data[_indexOfHightlightCells[i]]->setHighLightCell(false);
     }
 
-    _indexOfSelectedCells.clear();
+    _indexOfHightlightCells.clear();
 }
