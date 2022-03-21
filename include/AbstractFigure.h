@@ -39,6 +39,9 @@ public:
     bool isHighLightCell() const;
     void setHighLightCell(bool newIsHighLightCell);
 
+    void setPlayable(bool isPlayable);
+    bool isPlayable();
+
 signals:
     void activeCellChanged();
 
@@ -63,6 +66,8 @@ private:
 
     int _row;
     int _column;
+
+    bool _isPlayable = false;
 
 };
 

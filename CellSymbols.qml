@@ -11,6 +11,5 @@ Rectangle {
     height: heightCell/2
     width: widthCell
 
-    rotation: mainRectangle.isRotae;
 
 }

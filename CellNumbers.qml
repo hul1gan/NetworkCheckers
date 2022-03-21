@@ -8,6 +8,4 @@ Rectangle {
     width: widthCell/2
     border.color: "black"
     border.width: 1
-
-    rotation: mainRectangle.isRotae;
 }

@@ -113,3 +113,13 @@ void AbstractFigure::setHighLightCell(bool newIsHighLightCell)
 
     emit highLightCellChanged();
 }
+
+void AbstractFigure::setPlayable(bool isPlayable)
+{
+    _isPlayable = isPlayable;
+}
+
+bool AbstractFigure::isPlayable()
+{
+    return _isPlayable;
+}

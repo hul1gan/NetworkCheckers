@@ -20,14 +20,14 @@ public:
 
     enum Roles
     {
-        FigureRole = Qt::UserRole + 1,
-        FlippedBoard
+        FigureRole = Qt::UserRole + 1
     };
 
     Q_INVOKABLE void findPossibleWays(int rowPosition, int colPosition);
     Q_INVOKABLE void checkPossibilityMove(int newRow, int newColumn);
 
-    Q_INVOKABLE bool isFlippedBoard();
+
+    void setCheckerColorSelection(bool isWhite);
 
 
     void boardInit();
@@ -39,7 +39,7 @@ public:
     virtual int columnCount(const QModelIndex& parent) const override;
 
 
-    static AbstractFigure* createFigure(int row, int cal);
+    AbstractFigure* createFigure(int row, int cal);
 
     static const int BOARDROWSIZE = 8;
 
@@ -48,13 +48,13 @@ private:
     QVector<AbstractFigure*> m_data;
     QVector<int> _indexOfHightlightCells;
 
-    bool _isFlippedBoard = false;
-
     int _currentSelectesCellIndex;
 
     void _cancelSelectedCells();
 
+    bool _isWhiteColor = true;
 };
+
 
 
 

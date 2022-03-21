@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
+import QtQuick.Controls
 
 import GameModel 1.0
 
@@ -14,17 +15,24 @@ Window {
     width: heightCell*9.5
     height: heightCell*9.5
 
+    Rectangle {
+
+
+        anchors.fill: parent
+
+    }
+
 
     Rectangle{
 
-        readonly property int isRotae: gameModel.isFlippedBoard()? 180 : 0
+        //visible: false
+
+
         property int counter: 0
 
         id: mainRectangle
 
         anchors.fill:parent
-        rotation: isRotae
-
 
         color: "#333333"
 
@@ -60,7 +68,7 @@ Window {
                 border.color: "#73717B"
                 border.width: 0.2;
 
-                color: model.figure.isSelected ? "lightgoldenrodyellow": (model.figure.isHighLightCell ? Qt.lighter(cellColor, 1.6) :( cellColor))
+                color: model.figure.isSelectedCell ? "lightgoldenrodyellow": (model.figure.isHighLightCell ? Qt.lighter(cellColor, 1.6) : cellColor)
 
                 Image {
 
@@ -69,7 +77,6 @@ Window {
                     source: model.figure.imgPath
                     antialiasing: true
 
-                    rotation: mainRectangle.isRotae
                 }
 
 
@@ -83,18 +90,18 @@ Window {
                     {
                        // model.figure.isSelected = true;
                         mainRectangle.counter ++;
-
+                        //console.log(mainRectangle.counter);
 
                         if(mainRectangle.counter == 2)
                         {
                             gameModel.checkPossibilityMove(row + 1, column + 1);
                             mainRectangle.counter = 0;
+
                         }
                         else
                         {
                         gameModel.findPossibleWays(row + 1, column + 1);
                         }
-
 
 
                     }
