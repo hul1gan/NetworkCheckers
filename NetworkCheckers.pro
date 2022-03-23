@@ -10,6 +10,7 @@ SOURCES += \
         src/AbstractFigure.cpp \
         src/Checker.cpp \
         src/GameController.cpp \
+        src/Server.cpp \
         src/VoidChecker.cpp \
         src/main.cpp
 
@@ -30,6 +31,7 @@ HEADERS += \
     include/AbstractFigure.h \
     include/Checker.h \
     include/GameController.h \
+    include/Server.h \
     include/VoidChecker.h
 
 DISTFILES += \

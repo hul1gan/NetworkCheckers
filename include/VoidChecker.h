@@ -6,7 +6,6 @@
 class VoidChecker: public AbstractFigure
 {
 public:
-
     VoidChecker(QObject* parent = nullptr);
     ~VoidChecker();
 };

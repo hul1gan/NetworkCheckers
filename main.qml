@@ -8,24 +8,40 @@ Window {
 
     property int heightCell: 100
     property int widthCell: 100
+    property bool visibleBoard: false
 
-    visible: true
+
+    color: "#333333"
 
     id: mainwindow
     width: heightCell*9.5
     height: heightCell*9.5
 
-    Rectangle {
+    visible: true
 
+        Rectangle{
+           // text: "New Game"
+            width: heightCell*4
+            height: heightCell*4
+            anchors.centerIn: parent
 
-        anchors.fill: parent
+            Button{
 
-    }
+                width: heightCell*2
+                height: heightCell
+
+                //anchors.bottom: parent
+
+                onClicked: {visibleBoard  = true;}
+            }
+        }
 
 
     Rectangle{
 
-        //visible: false
+        visible: visibleBoard
+
+        color: "#333333"
 
 
         property int counter: 0
@@ -33,10 +49,6 @@ Window {
         id: mainRectangle
 
         anchors.fill:parent
-
-        color: "#333333"
-
-
 
         GameModel {
             id:gameModel
@@ -60,6 +72,7 @@ Window {
             {
 
                 readonly property color cellColor: model.figure.isActiveCell ? "#333333" : Qt.lighter("#333333", 1.3)
+
 
                 id:delegate
                 implicitHeight: heightCell
@@ -88,7 +101,7 @@ Window {
 
                     onClicked:
                     {
-                       // model.figure.isSelected = true;
+                        // model.figure.isSelected = true;
                         mainRectangle.counter ++;
                         //console.log(mainRectangle.counter);
 
@@ -100,13 +113,13 @@ Window {
                         }
                         else
                         {
-                        gameModel.findPossibleWays(row + 1, column + 1);
+                            gameModel.findPossibleMoves(row + 1, column + 1);
                         }
 
 
                     }
 
-                    }
+                }
 
 
 

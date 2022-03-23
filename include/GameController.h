@@ -3,6 +3,7 @@
 #include <include/AbstractFigure.h>
 #include <include/Checker.h>
 #include <include/VoidChecker.h>
+#include <include/Server.h>
 
 #include <QObject>
 #include <QAbstractListModel>
@@ -23,7 +24,7 @@ public:
         FigureRole = Qt::UserRole + 1
     };
 
-    Q_INVOKABLE void findPossibleWays(int rowPosition, int colPosition);
+    Q_INVOKABLE void findPossibleMoves(int rowPosition, int colPosition);
     Q_INVOKABLE void checkPossibilityMove(int newRow, int newColumn);
 
 
@@ -51,8 +52,11 @@ private:
     int _currentSelectesCellIndex;
 
     void _cancelSelectedCells();
+    void _highlightCheckerCells(int row, int col1, int col2 = 0);
 
     bool _isWhiteColor = true;
+
+    Server* _server;
 };
 
 

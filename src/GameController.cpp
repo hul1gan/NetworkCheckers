@@ -11,91 +11,62 @@ GameController::GameController(QObject *parent) : QAbstractListModel(parent)
 GameController::~GameController(){}
 
 
-void GameController::findPossibleWays(int rowPosition, int colPosition)
+void GameController::findPossibleMoves(int rowPosition, int colPosition)
 {
+    int indexSelectedChecker = ((rowPosition-1) * BOARDROWSIZE + colPosition) - 1;
 
-    //qDebug() << rowPosition << colPosition << "BEFORE";
-
-    int index = (rowPosition-1) * BOARDROWSIZE + colPosition;
-
-    if(!m_data[index - 1]->isPlayable())
+    if(!m_data[indexSelectedChecker]->isPlayable())
     {
         return;
     }
 
     _cancelSelectedCells();
 
-    m_data[index - 1]->setSelectCell(true);
-    dataChanged(createIndex(0,0), createIndex(BOARDROWSIZE, BOARDROWSIZE));
-    _currentSelectesCellIndex = index - 1;
+    m_data[indexSelectedChecker]->setSelectCell(true);
+    _currentSelectesCellIndex = indexSelectedChecker;
 
-
-    //_indexOfHightlightCells.push_back(index - 1);
-
-    int row;
+    int rowPossibleMove;
+    int columnPossibleMove;
+    int columnPossibleMove2 = 0;
 
     if(rowPosition != 1)
     {
-        row = rowPosition - 1;
+        rowPossibleMove = rowPosition - 1;
     }
     else
     {
         return;
     }
 
-    int colPosition1;
-    int colPosition2 = 0;
-
     if(colPosition == 1)
     {
-        colPosition1 = colPosition + 1;
+        columnPossibleMove = colPosition + 1;
 
     }
 
     else if(colPosition == BOARDROWSIZE)
     {
-        colPosition1 = colPosition - 1;
+        columnPossibleMove = colPosition - 1;
     }
     else
     {
-        colPosition1 = colPosition - 1;
-        colPosition2 = colPosition + 1;
+        columnPossibleMove = colPosition - 1;
+        columnPossibleMove2 = colPosition + 1;
     }
 
-    //qDebug() << rowPosition << col1 << col2;
+    _highlightCheckerCells(rowPossibleMove, columnPossibleMove, columnPossibleMove2);
 
-
-
-    for(int i = 0; i < m_data.size(); i++){
-
-        if(row == m_data[i]->getRow()){
-
-            if (colPosition1 == m_data[i]->getColumn()|| colPosition2 == m_data[i]->getColumn())
-            {
-                m_data[i]->setHighLightCell(true);
-                _indexOfHightlightCells.push_back(i);
-                dataChanged(createIndex(0,0), createIndex(BOARDROWSIZE, BOARDROWSIZE));
-              // qDebug() << "FIND" << m_data[i]->getRow() << m_data[i]->getColumn() << i;
-            }
-
-        }
-
-    }
 
 }
 
 void GameController::checkPossibilityMove(int newRow, int newColumn)
 {
-
-
     for(qsizetype i = 0; i < _indexOfHightlightCells.size(); i++)
     {
         if(m_data[_indexOfHightlightCells[i]]->getColumn() == newColumn && m_data[_indexOfHightlightCells[i]]->getRow() == newRow)
         {
             int index = ((newRow - 1) * BOARDROWSIZE + newColumn) - 1;
             swap(_currentSelectesCellIndex, index);
-           //qDebug() << m_data[_currentSelectesCellIndex]->isHighLightCell();
-
         };
     }
 
@@ -198,8 +169,6 @@ QVariant GameController::data(const QModelIndex &index, int role) const
     {
         return QVariant::fromValue(m_data[elIndex]);
     }
-
-
     default:
     {
         return QVariant();
@@ -281,4 +250,24 @@ void GameController::_cancelSelectedCells()
     }
 
     _indexOfHightlightCells.clear();
+}
+
+void GameController::_highlightCheckerCells(int row, int col1, int col2)
+{
+    for(int i = 0; i < m_data.size(); i++){
+
+        if(row == m_data[i]->getRow()){
+
+            if (col1 == m_data[i]->getColumn()|| col2 == m_data[i]->getColumn())
+            {
+                if(!m_data[i]->isPlayable()){
+                    m_data[i]->setHighLightCell(true);
+                    _indexOfHightlightCells.push_back(i);
+                    dataChanged(createIndex(0,0), createIndex(BOARDROWSIZE, BOARDROWSIZE));
+                }
+            }
+
+        }
+    }
+
 }
