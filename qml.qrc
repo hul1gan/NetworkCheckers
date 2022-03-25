@@ -7,5 +7,6 @@
         <file>CellNumbers.qml</file>
         <file>Pictures/1.svg</file>
         <file>Pictures/2.svg</file>
+        <file>ConnectionWindowSetting.qml</file>
     </qresource>
 </RCC>

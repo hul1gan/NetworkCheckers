@@ -8,7 +8,7 @@ Window {
 
     property int heightCell: 100
     property int widthCell: 100
-    property bool visibleBoard: false
+    property bool visibleBoard: true
 
 
     color: "#333333"
@@ -19,22 +19,8 @@ Window {
 
     visible: true
 
-        Rectangle{
-           // text: "New Game"
-            width: heightCell*4
-            height: heightCell*4
-            anchors.centerIn: parent
-
-            Button{
-
-                width: heightCell*2
-                height: heightCell
-
-                //anchors.bottom: parent
-
-                onClicked: {visibleBoard  = true;}
-            }
-        }
+//    ConnectionWindowSetting {
+//    }
 
 
     Rectangle{

@@ -20,6 +20,12 @@ void GameController::findPossibleMoves(int rowPosition, int colPosition)
         return;
     }
 
+    if(m_data[indexSelectedChecker]->_enemyСhecker) //temporary
+    {
+        _currentSelectesCellIndex = indexSelectedChecker;
+        return;
+    }
+
     _cancelSelectedCells();
 
     m_data[indexSelectedChecker]->setSelectCell(true);
@@ -61,6 +67,11 @@ void GameController::findPossibleMoves(int rowPosition, int colPosition)
 
 void GameController::checkPossibilityMove(int newRow, int newColumn)
 {
+    if(m_data[_currentSelectesCellIndex]->_enemyСhecker)  //temporary
+    {
+        int index = ((newRow - 1) * BOARDROWSIZE + newColumn) - 1;
+        swap(_currentSelectesCellIndex, index);
+    }
     for(qsizetype i = 0; i < _indexOfHightlightCells.size(); i++)
     {
         if(m_data[_indexOfHightlightCells[i]]->getColumn() == newColumn && m_data[_indexOfHightlightCells[i]]->getRow() == newRow)
@@ -220,6 +231,11 @@ AbstractFigure* GameController::createFigure(int row, int col)
         newChecker->setImgPath(path1);
         newChecker->setActiveCell(true);
         newChecker->setContainFigure(true);
+
+        newChecker->_enemyСhecker = true; //temporary
+        newChecker->setPlayable(true); //temporary
+
+
         return newChecker;
     }
     else if(row > 5)

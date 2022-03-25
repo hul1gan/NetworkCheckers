@@ -10,6 +10,4 @@ public:
     Server();
 private:
     QTcpServer* m_ptcpServer;
-
-
 };

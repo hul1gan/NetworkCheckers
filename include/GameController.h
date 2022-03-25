@@ -57,6 +57,9 @@ private:
     bool _isWhiteColor = true;
 
     Server* _server;
+
+
+    bool _isMyLine = true;    //temporary
 };
 
 

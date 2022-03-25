@@ -42,6 +42,8 @@ public:
     void setPlayable(bool isPlayable);
     bool isPlayable();
 
+    bool _enemyСhecker = false; //temporary
+
 signals:
     void activeCellChanged();
 
