@@ -17,6 +17,8 @@ public:
     AbstractFigure(QObject* parent = nullptr);
     virtual ~AbstractFigure();
 
+    AbstractFigure(AbstractFigure& other) = default;
+
 
     void setPosition(int row, int col);
     int getRow();

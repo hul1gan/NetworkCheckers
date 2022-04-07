@@ -93,7 +93,7 @@ Window {
 
                         if(mainRectangle.counter == 2)
                         {
-                            gameModel.checkPossibilityMove(row + 1, column + 1);
+                            gameModel.tryToSwap(row + 1, column + 1);
                             mainRectangle.counter = 0;
 
                         }

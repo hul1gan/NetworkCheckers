@@ -25,8 +25,9 @@ public:
     };
 
     Q_INVOKABLE void findPossibleMoves(int rowPosition, int colPosition);
-    Q_INVOKABLE void checkPossibilityMove(int newRow, int newColumn);
+    Q_INVOKABLE void tryToSwap(int newRow, int newColumn);
 
+    void checkCutDownMoves(int row, int col);
 
     void setCheckerColorSelection(bool isWhite);
 
@@ -60,7 +61,12 @@ private:
 
 
     bool _isMyLine = true;    //temporary
+
+    int _calculateindex(int row, int col);
+
+    bool _isCellExist(int row, int col);
 };
+
 
 
 
