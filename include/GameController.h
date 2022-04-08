@@ -4,6 +4,7 @@
 #include <include/Checker.h>
 #include <include/VoidChecker.h>
 #include <include/Server.h>
+#include <include/MyPair.h>
 
 #include <QObject>
 #include <QAbstractListModel>
@@ -49,6 +50,7 @@ private:
 
     QVector<AbstractFigure*> m_data;
     QVector<int> _indexOfHightlightCells;
+    QVector<MyPair> _indexOfCutDown;
 
     int _currentSelectesCellIndex;
 
@@ -65,6 +67,8 @@ private:
     int _calculateindex(int row, int col);
 
     bool _isCellExist(int row, int col);
+
+    void _cutDown(int index);
 };
 
 

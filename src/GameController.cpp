@@ -75,12 +75,18 @@ void GameController::tryToSwap(int newRow, int newColumn)
         int index = ((newRow - 1) * BOARDROWSIZE + newColumn) - 1;
         swap(_currentSelectesCellIndex, index);
     }
+    for(qsizetype i = 0; i < _indexOfCutDown.size(); i++)
+    {
+        if(m_data[_indexOfCutDown[i].newIndex]->getColumn() == newColumn && m_data[_indexOfCutDown[i].newIndex]->getRow() == newRow)
+        {
+            _cutDown(_indexOfCutDown[i].indexOfChecker);
+        }
+    }
     for(qsizetype i = 0; i < _indexOfHightlightCells.size(); i++)
     {
 
         if(m_data[_indexOfHightlightCells[i]]->getColumn() == newColumn && m_data[_indexOfHightlightCells[i]]->getRow() == newRow)
         {
-
             int index = ((newRow - 1) * BOARDROWSIZE + newColumn) - 1;
             swap(_currentSelectesCellIndex, index);
         };
@@ -108,69 +114,64 @@ void GameController::checkCutDownMoves(int row, int col)
 
                 if(!m_data[_calculateindex(possibleRow1 - 1, possibleCol1 - 1)]->isContainFigure())
                 {
-
+                    _indexOfCutDown.push_back(MyPair{_calculateindex(possibleRow1 - 1, possibleCol1 - 1), _calculateindex(possibleRow1, possibleCol1)});
                     _highlightCheckerCells(possibleRow1 - 1, possibleCol1 - 1);
-                    qDebug() << "1" ;
-
-                    //m_data[_calculateindex(possibleRow1 - 1, possibleCol1 - 1)]->setHighLightCell(true);
-                    checkCutDownMoves(possibleRow1 - 1, possibleCol1 - 1);
+                    //checkCutDownMoves(possibleRow1 - 1, possibleCol1 - 1);
                 }
             }
 
         }
     }
-        if(_isCellExist(possibleRow1, possibleCol2))
-        {
-            if(m_data[_calculateindex(possibleRow1, possibleCol2)]->_enemyСhecker){
+    if(_isCellExist(possibleRow1, possibleCol2))
+    {
+        if(m_data[_calculateindex(possibleRow1, possibleCol2)]->_enemyСhecker){
 
-                if(_isCellExist(possibleRow1 - 1, possibleCol2 + 1))
+            if(_isCellExist(possibleRow1 - 1, possibleCol2 + 1))
+            {
+                if(!m_data[_calculateindex(possibleRow1 - 1, possibleCol2 + 1)]->isContainFigure())
                 {
-                    if(!m_data[_calculateindex(possibleRow1 - 1, possibleCol2 + 1)]->isContainFigure())
-                    {
-                        qDebug() << "2" <<possibleRow1 - 1 << possibleCol2 + 1;
-                        _highlightCheckerCells(possibleRow1 - 1, possibleCol2 + 1);
-                        checkCutDownMoves(possibleRow1 - 1, possibleCol2 + 1);
-                    }
+                    _indexOfCutDown.push_back(MyPair{_calculateindex(possibleRow1 - 1, possibleCol2 + 1), _calculateindex(possibleRow1, possibleCol2)});
+                    _highlightCheckerCells(possibleRow1 - 1, possibleCol2 + 1);
+                    //checkCutDownMoves(possibleRow1 - 1, possibleCol2 + 1);
                 }
-
             }
 
         }
 
-        if(_isCellExist(possibleRow2, possibleCol1))
-        {
-            if(m_data[_calculateindex(possibleRow2, possibleCol1)]->_enemyСhecker){
+    }
 
-                if(_isCellExist(possibleRow2 + 1, possibleCol1 - 1))
+    if(_isCellExist(possibleRow2, possibleCol1))
+    {
+        if(m_data[_calculateindex(possibleRow2, possibleCol1)]->_enemyСhecker){
+
+            if(_isCellExist(possibleRow2 + 1, possibleCol1 - 1))
+            {
+                if(!m_data[_calculateindex(possibleRow2 + 1, possibleCol1 - 1)]->isContainFigure())
                 {
-                    if(!m_data[_calculateindex(possibleRow2 + 1, possibleCol1 - 1)]->isContainFigure())
-                    {
-                        qDebug() << "3" << possibleRow2 + 1 << possibleCol1 - 1;
-                        _highlightCheckerCells(possibleRow2 + 1, possibleCol1 - 1);
-                        checkCutDownMoves(possibleRow2 + 1, possibleCol1 - 1);
-                    }
+                    _indexOfCutDown.push_back(MyPair{_calculateindex(possibleRow2 + 1, possibleCol1 - 1), _calculateindex(possibleRow2, possibleCol1)});
+                    _highlightCheckerCells(possibleRow2 + 1, possibleCol1 - 1);
                 }
-
             }
 
-
         }
-        if(_isCellExist(possibleRow2, possibleCol2))
-        {
-            if(m_data[_calculateindex(possibleRow2, possibleCol2)]->_enemyСhecker){
 
-                if(_isCellExist(possibleRow2 + 1, possibleCol2 + 1))
+
+    }
+    if(_isCellExist(possibleRow2, possibleCol2))
+    {
+        if(m_data[_calculateindex(possibleRow2, possibleCol2)]->_enemyСhecker){
+
+            if(_isCellExist(possibleRow2 + 1, possibleCol2 + 1))
+            {
+                if(!m_data[_calculateindex(possibleRow2 + 1, possibleCol2 + 1)]->isContainFigure())
                 {
-                    if(!m_data[_calculateindex(possibleRow2 + 1, possibleCol2 + 1)]->isContainFigure())
-                    {
-                        qDebug() << "4";
-                        _highlightCheckerCells(possibleRow2 + 1, possibleCol2 + 1);
-                        checkCutDownMoves(possibleRow2 + 1, possibleCol2 + 1);
-                    }
+                    _indexOfCutDown.push_back(MyPair{_calculateindex(possibleRow2 + 1, possibleCol2 + 1), _calculateindex(possibleRow2, possibleCol2)});
+                    _highlightCheckerCells(possibleRow2 + 1, possibleCol2 + 1);
                 }
-
             }
+
         }
+    }
 }
 
 
@@ -374,7 +375,7 @@ void GameController::_highlightCheckerCells(int row, int col1, int col2)
     if(_isCellExist(row, col1))
     {
         if(!m_data[index1]->isPlayable()){
-            qDebug() << "add";
+
             m_data[index1]->setHighLightCell(true);
             _indexOfHightlightCells.push_back(index1);
             dataChanged(createIndex(0,0), createIndex(BOARDROWSIZE, BOARDROWSIZE));
@@ -383,7 +384,7 @@ void GameController::_highlightCheckerCells(int row, int col1, int col2)
         {
 
             if(!m_data[index2]->isPlayable()){
-                qDebug() << "add";
+
                 m_data[index2]->setHighLightCell(true);
                 _indexOfHightlightCells.push_back(index2);
                 dataChanged(createIndex(0,0), createIndex(BOARDROWSIZE, BOARDROWSIZE));
@@ -407,4 +408,16 @@ bool GameController::_isCellExist(int row, int col)
     }
 
     return true;
+}
+
+void GameController::_cutDown(int index)
+{
+
+    m_data[index]->setImgPath("");
+    m_data[index]->_enemyСhecker = false;
+
+    _indexOfCutDown.clear();
+
+    dataChanged(createIndex(0,0), createIndex(BOARDROWSIZE, BOARDROWSIZE));
+
 }

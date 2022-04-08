@@ -31,6 +31,7 @@ HEADERS += \
     include/AbstractFigure.h \
     include/Checker.h \
     include/GameController.h \
+    include/MyPair.h \
     include/Server.h \
     include/VoidChecker.h
 
